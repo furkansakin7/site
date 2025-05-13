@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>uzayhavasi.com</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #101c33; /* Arka plan rengi #101c33 */
+            color: white; /* Yazı rengi beyaz */
+        }
+
+        .header-image {
+            width: 100%;
+            height: 230px;
+            object-fit: ;
+            display: block;
+        }
+
+        .form-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        .form-container label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-container input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            grid-column: span 4;
+            padding: 10px;
+            background-color: #75b8e5;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #669fb4;
+        }
+
+        .prediction {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #75b8e5;
+            color: white;
+            text-align: center;
+            border-radius: 4px;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+        }
+
+        h2 {
+            color: white;
+        }
+
+        .variable-selector {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .variable-selector select {
+            padding: 8px;
+            font-size: 16px;
+            background-color: #75b8e5;
+            border: none;
+            color: white;
+            border-radius: 4px;
+        }
+
+    </style>
+</head>
+<body>
+    <img src="static/kapa.png" alt="Header Image" class="header-image">
+
+    <h1>3 Saat Sonraki Kp Tahmin Uygulaması</h1>
+    
+    {% if prediction is not none %}
+        <div class="prediction">
+            <h2>Tahmin Sonucu: {{ prediction }}</h2>
+        </div>
+    {% endif %}
+
+    <form method="POST">
+        <div class="form-container">
+            <div>
+                <label for="input_1">Sakin:</label>
+                <input type="text" id="input_1" name="input_1" required>
+            </div>
+            <div>
+                <label for="input_2">Kp:</label>
+                <input type="text" id="input_2" name="input_2" required>
+            </div>
+            <div>
+                <label for="input_3">Ap:</label>
+                <input type="text" id="input_3" name="input_3" required>
+            </div>
+            <div>
+                <label for="input_4">Lyman_alpha:</label>
+                <input type="text" id="input_4" name="input_4" required>
+            </div>
+
+            <div>
+                <label for="input_5">AE:</label>
+                <input type="text" id="input_5" name="input_5" required>
+            </div>
+            <div>
+                <label for="input_6">AU:</label>
+                <input type="text" id="input_6" name="input_6" required>
+            </div>
+            <div>
+                <label for="input_7">f10.7:</label>
+                <input type="text" id="input_7" name="input_7" required>
+            </div>
+            <div>
+                <label for="input_8">AL:</label>
+                <input type="text" id="input_8" name="input_8" required>
+            </div>
+
+            <div>
+                <label for="input_9">pc:</label>
+                <input type="text" id="input_9" name="input_9" required>
+            </div>
+            <div>
+                <label for="input_10">Bt:</label>
+                <input type="text" id="input_10" name="input_10" required>
+            </div>
+            <div>
+                <label for="input_11">Temperature:</label>
+                <input type="text" id="input_11" name="input_11" required>
+            </div>
+            <div>
+                <label for="input_12">FlowPressure:</label>
+                <input type="text" id="input_12" name="input_12" required>
+            </div>
+
+            <div>
+                <label for="input_13">Speed:</label>
+                <input type="text" id="input_13" name="input_13" required>
+            </div>
+            <div>
+                <label for="input_14">Electric Field:</label>
+                <input type="text" id="input_14" name="input_14" required>
+            </div>
+            <div>
+                <label for="input_15">Dst:</label>
+                <input type="text" id="input_15" name="input_15" required>
+            </div>
+            <div>
+                <label for="input_16">Storm_Status_Encoded:</label>
+                <input type="text" id="input_16" name="input_16" required>
+            </div>
+
+            <button type="submit">Tahmin Et</button>
+        </div>
+    </form>
+
+    {% if graph_html1 %}
+        <div>
+            {{ graph_html1|safe }}
+        </div>
+    {% endif %}
+
+    <div class="variable-selector">
+        <h2>Değişken Seçin</h2>
+        <form method="GET">
+            <select name="variable_select">
+                <option value="">Bir değişken seçin</option>
+                {% for variable in variable_list %}
+                    <option value="{{ variable }}" {% if selected_variable == variable %}selected{% endif %}>{{ variable }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Grafiği Göster</button>
+        </form>
+    </div>
+
+    {% if graph_html2 %}
+        <div>
+            {{ graph_html2|safe }}
+        </div>
+    {% endif %}
+</body>
+</html>
